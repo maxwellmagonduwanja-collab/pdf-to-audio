@@ -1,0 +1,6 @@
+PyMuPDF>=1.22.0
+edge-tts>=6.1.9
+pyttsx3>=2.90
+pygame-ce>=2.5.0
+Pillow>=9.5.0
+pytesseract>=0.3.10
