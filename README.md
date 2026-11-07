@@ -18,8 +18,9 @@ A Python desktop application that converts study PDFs into natural-sounding spok
    ```bash
    python -m pip install -r requirements.txt
    ```
-3. (Optional, for scanned PDFs) install [Tesseract-OCR](https://github.com/tesseract-ocr/tesseract).
-4. Run:
+3. On Linux, install the system Tcl/Tk package required by the desktop GUI (for example, `sudo pacman -S tk` on Arch Linux, `sudo apt install tk` on Debian/Ubuntu, or `sudo dnf install tk` on Fedora).
+4. (Optional, for scanned PDFs) install [Tesseract-OCR](https://github.com/tesseract-ocr/tesseract).
+5. Run:
    ```bash
    python main.py
    ```

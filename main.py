@@ -6,7 +6,7 @@ from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent
 REQUIREMENTS_FILE = PROJECT_DIR / "requirements.txt"
-GITHUB_URL = "https://github.com/search?q=PDF+to+Audio+Maxwell&type=repositories"
+GITHUB_URL = "https://github.com/maxwellmagonduwanja-collab/pdf-to-audio.git"
 
 ORANGE = "\033[38;5;208m"
 RED = "\033[38;5;196m"
@@ -66,6 +66,25 @@ def pause_for_acknowledgement() -> None:
         print()
 
 
+def show_tk_install_help(error: ImportError) -> None:
+    message = str(error).lower()
+    if "tkinter" not in message and "_tkinter" not in message and "libtk" not in message:
+        return
+
+    print(
+        paint(
+            "\nTkinter needs the system Tcl/Tk libraries; pip cannot install them.",
+            RED,
+        )
+    )
+    if sys.platform.startswith("linux"):
+        print("Install the Tk package for your Linux distribution:")
+        print("  Arch Linux:     sudo pacman -S tk")
+        print("  Debian/Ubuntu:  sudo apt install tk")
+        print("  Fedora:         sudo dnf install tk")
+        print("  windows:        sorry not supported yet")
+
+
 def install_dependencies() -> None:
     print(f"\nInstalling dependencies with {sys.executable} ...\n")
     try:
@@ -91,7 +110,14 @@ def install_dependencies() -> None:
     except OSError as error:
         print(paint(f"\nCould not start pip: {error}", RED))
     else:
-        print(paint("\nDependencies installed successfully.", CYAN))
+        print(paint("\nPython dependencies installed successfully.", CYAN))
+        try:
+            import tkinter
+        except ImportError as error:
+            print(paint(f"\nThe GUI prerequisite check failed: {error}", RED))
+            show_tk_install_help(error)
+        else:
+            print(paint("Tkinter is available.", CYAN))
     pause_for_acknowledgement()
 
 
@@ -123,6 +149,7 @@ def main() -> None:
                 launch_gui()
             except ImportError as error:
                 print(paint(f"\nCould not start the GUI: {error}", RED))
+                show_tk_install_help(error)
                 pause_for_acknowledgement()
         else:
             print(paint("Please choose 1 or 2.", RED))
